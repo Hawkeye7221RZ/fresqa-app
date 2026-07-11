@@ -3,6 +3,8 @@
 // Versi ini baru kerangka awal — nanti di step berikutnya kita isi
 // dengan data asli (jumlah order hari ini, stok rendah, dll)
 
+import Link from "next/link";
+
 export default function AdminDashboard() {
   const summaryCards = [
     { label: "Order hari ini", value: "—" },
@@ -36,9 +38,34 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      <div className="mt-10 border border-dashed border-frost-300 rounded-shard p-8 text-center text-frost-500 text-sm">
-        Tabel order, kelola produk, dan kelola stok akan ditambahkan di
-        langkah berikutnya.
+      <div className="mt-10 grid grid-cols-2 md:grid-cols-3 gap-4">
+        <Link
+          href="/admin/products"
+          className="border border-frost-200 rounded-shard bg-white p-5 hover:border-frost-400 transition-colors"
+        >
+          <p className="font-display text-lg text-ink">Kelola Produk</p>
+          <p className="text-xs text-frost-500 mt-1">
+            Tambah, edit, hapus produk
+          </p>
+        </Link>
+        <Link
+          href="/admin/stock"
+          className="border border-frost-200 rounded-shard bg-white p-5 hover:border-frost-400 transition-colors"
+        >
+          <p className="font-display text-lg text-ink">Kelola Stok</p>
+          <p className="text-xs text-frost-500 mt-1">
+            Catat produksi, stok rusak, penyesuaian
+          </p>
+        </Link>
+        <Link
+          href="/admin/orders"
+          className="border border-frost-200 rounded-shard bg-white p-5 hover:border-frost-400 transition-colors"
+        >
+          <p className="font-display text-lg text-ink">Kelola Order</p>
+          <p className="text-xs text-frost-500 mt-1">
+            Lihat & proses pesanan, atur pengiriman
+          </p>
+        </Link>
       </div>
     </div>
   );
