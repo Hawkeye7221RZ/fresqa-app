@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #EAF6F8;
+  color: #0E2B33;
+}
+
+/* Aksen tekstur "retak es" tipis di background, sangat halus */
+.ice-texture {
+  background-image:
+    linear-gradient(135deg, rgba(212,241,244,0.5) 1px, transparent 1px),
+    linear-gradient(45deg, rgba(212,241,244,0.5) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
