@@ -200,7 +200,7 @@ export default function CartPage() {
         </p>
         <Link
           href="/"
-          className="inline-block bg-frost-600 text-white rounded-shard px-5 py-2.5 text-sm hover:bg-frost-700"
+          className="inline-block bg-meltwater-500 text-frost-900 font-medium rounded-shard px-5 py-2.5 text-sm hover:bg-meltwater-400"
         >
           Lihat Katalog
         </Link>
@@ -319,7 +319,7 @@ export default function CartPage() {
       </div>
 
       {/* Ringkasan total */}
-      <div className="border border-frost-200 rounded-shard bg-white p-4 mb-6 text-sm space-y-1">
+      <div className="border border-frost-200 rounded-shard bg-white p-4 mb-6 text-sm space-y-1 font-mono">
         <div className="flex justify-between text-frost-600">
           <span>Subtotal</span>
           <span>Rp{totalPrice.toLocaleString("id-ID")}</span>
@@ -342,7 +342,7 @@ export default function CartPage() {
       <button
         onClick={handleCheckout}
         disabled={submitting}
-        className="w-full bg-frost-600 text-white rounded-shard py-3 hover:bg-frost-700 disabled:opacity-50"
+        className="w-full bg-meltwater-500 text-frost-900 font-medium rounded-shard py-3 hover:bg-meltwater-400 disabled:opacity-50 transition-colors"
       >
         {submitting ? "Memproses..." : "Buat Pesanan"}
       </button>

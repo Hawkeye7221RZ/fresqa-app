@@ -76,6 +76,23 @@ supabase/       file SQL schema & RLS
 
 Fonnte punya kuota gratis terbatas buat testing; buat pemakaian rutin, cek paket harga di dashboard mereka.
 
+## Setup Lupa Password
+Fitur "Lupa Password" (di halaman `/login`) butuh 1 konfigurasi tambahan
+di Supabase, kalau nggak link di emailnya bisa nyasar:
+
+1. Buka Supabase Dashboard → **Authentication → URL Configuration**
+2. Di bagian **Redirect URLs**, tambahin:
+   ```
+   http://localhost:3000/reset-password
+   ```
+3. Kalau nanti udah deploy ke domain asli, tambahin juga:
+   ```
+   https://domain-asli-kamu.com/reset-password
+   ```
+4. Save
+
+Tanpa langkah ini, klik link di email reset password bisa gagal atau nyasar ke halaman lain.
+
 ## Setup Payment Gateway (Midtrans)
 
 ### 1. Bikin akun sandbox (buat testing, gratis)

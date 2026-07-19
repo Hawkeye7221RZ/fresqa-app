@@ -33,8 +33,14 @@ export default function Navbar() {
       <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link
           href="/"
-          className="font-display text-xl tracking-tight text-frost-800"
+          prefetch={false}
+          className="flex items-center gap-2 font-display text-xl tracking-tight text-frost-800"
         >
+          <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none">
+            <polygon points="12,1 21,8 18,23 6,23 3,8" fill="#1F6E83" />
+            <polygon points="12,1 21,8 12,12" fill="#2E8CA3" />
+            <polygon points="3,8 6,23 12,12" fill="#0DA891" opacity="0.7" />
+          </svg>
           Fresqa
         </Link>
         <nav className="flex items-center gap-6 text-sm text-frost-700">
@@ -49,7 +55,7 @@ export default function Navbar() {
           <Link href="/cart" prefetch={false} className="hover:text-frost-900 relative">
             Keranjang
             {totalItems > 0 && (
-              <span className="absolute -top-2 -right-3 bg-frost-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+              <span className="absolute -top-2 -right-3 bg-meltwater-500 text-frost-900 text-[10px] font-medium rounded-full w-4 h-4 flex items-center justify-center">
                 {totalItems}
               </span>
             )}
@@ -81,7 +87,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="px-4 py-2 rounded-shard bg-frost-600 text-white hover:bg-frost-700 transition-colors"
+              className="px-4 py-2 rounded-shard bg-meltwater-500 text-frost-900 font-medium hover:bg-meltwater-400 transition-colors"
             >
               Masuk
             </Link>

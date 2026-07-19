@@ -19,8 +19,8 @@ export default function ProductCard({ product }: { product: Product }) {
   }
 
   return (
-    <div className="group rounded-shard border border-frost-200 bg-white overflow-hidden hover:border-frost-400 transition-colors">
-      <div className="aspect-square bg-frost-100 flex items-center justify-center overflow-hidden">
+    <div className="group rounded-shard border border-frost-200 bg-white overflow-hidden hover:border-frost-400 hover:shadow-[0_4px_20px_-6px_rgba(15,85,103,0.15)] transition-all duration-200">
+      <div className="aspect-square bg-frost-100 flex items-center justify-center overflow-hidden relative">
         {product.image_url ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -33,26 +33,28 @@ export default function ProductCard({ product }: { product: Product }) {
         )}
       </div>
       <div className="p-4">
-        <h3 className="font-display text-lg text-ink">{product.name}</h3>
+        <h3 className="font-display text-lg text-ink leading-snug">
+          {product.name}
+        </h3>
         {product.description && (
           <p className="text-sm text-frost-600 mt-1 line-clamp-2">
             {product.description}
           </p>
         )}
         <div className="mt-3 flex items-center justify-between">
-          <span className="font-semibold text-frost-800">
+          <span className="font-mono text-[15px] font-medium text-frost-800">
             Rp{product.price.toLocaleString("id-ID")}
-            <span className="text-xs text-frost-500 font-normal">
+            <span className="text-xs text-frost-400 font-normal">
               {" "}
-              / {product.unit}
+              /{product.unit}
             </span>
           </span>
           <button
             onClick={handleAdd}
             className={`text-sm px-3 py-1.5 rounded-shard transition-colors ${
               justAdded
-                ? "bg-green-600 text-white"
-                : "bg-frost-600 text-white hover:bg-frost-700"
+                ? "bg-meltwater-600 text-white"
+                : "bg-frost-800 text-white hover:bg-meltwater-600"
             }`}
           >
             {justAdded ? "✓ Ditambah" : "+ Keranjang"}

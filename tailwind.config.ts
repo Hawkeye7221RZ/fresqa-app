@@ -24,16 +24,36 @@ const config: Config = {
         glacier: "#EAF6F8", // background terang, kayak permukaan es
         crystal: "#D4F1F4", // aksen highlight es
         ink: "#0E2B33",     // teks utama, biru gelap kehitaman
+        // Warna sinyal — dipakai KHUSUS buat CTA utama & harga, biar nggak
+        // ketimpa sama biru struktural di atas. Terinspirasi warna air lelehan
+        // es yang jernih kehijauan, bukan hijau/teal generik.
+        meltwater: {
+          400: "#4DDFCB",
+          500: "#1FC7AE",
+          600: "#0DA891",
+        },
       },
       fontFamily: {
         display: ["var(--font-display)"],
         body: ["var(--font-body)"],
+        mono: ["var(--font-mono)"], // buat kode pesanan, harga, label teknis
       },
       borderRadius: {
         shard: "2px 14px 2px 14px", // sudut asimetris, mengingatkan pecahan es
       },
+      clipPath: {
+        facet: "polygon(0 0, 100% 0, 100% 92%, 0 100%)",
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }: { addUtilities: (u: Record<string, Record<string, string>>) => void }) {
+      addUtilities({
+        ".clip-facet": {
+          "clip-path": "polygon(0 0, 100% 0, 100% 100%, 0 94%)",
+        },
+      });
+    },
+  ],
 };
 export default config;

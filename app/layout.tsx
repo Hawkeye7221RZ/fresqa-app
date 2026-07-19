@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -17,6 +17,14 @@ const fraunces = Fraunces({
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-body",
+});
+// IBM Plex Mono — dipakai KHUSUS buat harga & kode pesanan.
+// Kesan "presisi terukur", cocok sama tema kristal es yang jernih & eksak,
+// dan bikin harga langsung kebaca beda dari teks biasa.
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -48,7 +56,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id">
-      <body className={`${fraunces.variable} ${inter.variable} font-body`}>
+      <body className={`${fraunces.variable} ${inter.variable} ${plexMono.variable} font-body`}>
         {/* Snap.js Midtrans — dipakai buat munculin popup pembayaran.
             URL ini "sandbox" (buat testing). Kalau udah siap produksi,
             ganti ke https://app.midtrans.com/snap/snap.js */}
