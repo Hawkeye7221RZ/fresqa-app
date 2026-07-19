@@ -1,7 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import PwaSetup from "@/components/PwaSetup";
+import { CartProvider } from "@/lib/cart-context";
+import { AuthProvider } from "@/lib/auth-context";
 
 // Fraunces = font display berkarakter (dipakai judul/branding)
 // Inter = font body, gampang dibaca buat konten panjang
@@ -18,6 +22,23 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Fresqa — Es Batu Kristal",
   description: "Pesan es batu kristal berkualitas, langsung dari produsen.",
+  manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/icons/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Fresqa",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1F6E83",
 };
 
 export default function RootLayout({
@@ -28,8 +49,21 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className={`${fraunces.variable} ${inter.variable} font-body`}>
-        <Navbar />
-        <main>{children}</main>
+        {/* Snap.js Midtrans — dipakai buat munculin popup pembayaran.
+            URL ini "sandbox" (buat testing). Kalau udah siap produksi,
+            ganti ke https://app.midtrans.com/snap/snap.js */}
+        <Script
+          src="https://app.sandbox.midtrans.com/snap/snap.js"
+          data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}
+          strategy="afterInteractive"
+        />
+        <AuthProvider>
+          <CartProvider>
+            <Navbar />
+            <main>{children}</main>
+            <PwaSetup />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

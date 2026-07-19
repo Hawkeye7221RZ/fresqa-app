@@ -8,6 +8,12 @@ import ProductCard from "@/components/ProductCard";
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 
+// Paksa halaman ini selalu dirender ulang tiap kunjungan (nggak di-cache).
+// Ini buat jaga-jaga dari bug caching Next.js App Router yang kadang
+// nampilin konten halaman lain di URL yang salah.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 async function getProducts() {
   const cookieStore = cookies();
   const supabase = createServerClient(

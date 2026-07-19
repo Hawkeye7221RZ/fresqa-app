@@ -66,6 +66,15 @@ export default function AdminDashboard() {
             Lihat & proses pesanan, atur pengiriman
           </p>
         </Link>
+        <Link
+          href="/admin/pos"
+          className="border border-frost-200 rounded-shard bg-white p-5 hover:border-frost-400 transition-colors"
+        >
+          <p className="font-display text-lg text-ink">Kasir / POS</p>
+          <p className="text-xs text-frost-500 mt-1">
+            Transaksi walk-in, stok otomatis terpotong
+          </p>
+        </Link>
       </div>
     </div>
   );

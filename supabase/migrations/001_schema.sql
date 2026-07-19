@@ -146,7 +146,10 @@ create trigger trg_deliveries_updated before update on deliveries
 -- 7. TRIGGER: auto-adjust stock saat ada stock_movement baru
 -- ---------------------------------------------------------
 create or replace function apply_stock_movement()
-returns trigger as $$
+returns trigger
+security definer
+set search_path = public
+as $$
 begin
   insert into stock_items (product_id, quantity)
   values (new.product_id, new.quantity)
@@ -177,3 +180,30 @@ returns boolean as $$
     where id = auth.uid() and role in ('admin', 'karyawan')
   );
 $$ language sql stable;
+
+-- ---------------------------------------------------------
+-- 9. AUTO-CREATE PROFILE saat ada user baru daftar
+-- Tanpa ini, admin harus manual insert ke `profiles` tiap ada user baru.
+-- ---------------------------------------------------------
+create or replace function handle_new_user()
+returns trigger
+security definer
+set search_path = public
+as $$
+begin
+  insert into profiles (id, full_name, role)
+  values (
+    new.id,
+    coalesce(new.raw_user_meta_data->>'full_name', split_part(new.email, '@', 1)),
+    'pelanggan'
+  )
+  on conflict (id) do nothing;
+  return new;
+end;
+$$ language plpgsql;
+
+drop trigger if exists on_auth_user_created on auth.users;
+
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute function handle_new_user();

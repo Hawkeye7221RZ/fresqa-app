@@ -1,11 +1,23 @@
+"use client";
 // components/ProductCard.tsx
 // Satu kartu produk. Dipakai berulang di halaman katalog (app/page.tsx).
 // Kalau nanti mau ubah tampilan kartu produk, cukup edit file ini,
 // otomatis semua kartu di semua halaman ikut berubah.
 
+import { useState } from "react";
 import { Product } from "@/lib/supabase";
+import { useCart } from "@/lib/cart-context";
 
 export default function ProductCard({ product }: { product: Product }) {
+  const { addItem } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
+
+  function handleAdd() {
+    addItem(product);
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1200);
+  }
+
   return (
     <div className="group rounded-shard border border-frost-200 bg-white overflow-hidden hover:border-frost-400 transition-colors">
       <div className="aspect-square bg-frost-100 flex items-center justify-center overflow-hidden">
@@ -35,8 +47,15 @@ export default function ProductCard({ product }: { product: Product }) {
               / {product.unit}
             </span>
           </span>
-          <button className="text-sm px-3 py-1.5 rounded-shard bg-frost-600 text-white hover:bg-frost-700 transition-colors">
-            + Keranjang
+          <button
+            onClick={handleAdd}
+            className={`text-sm px-3 py-1.5 rounded-shard transition-colors ${
+              justAdded
+                ? "bg-green-600 text-white"
+                : "bg-frost-600 text-white hover:bg-frost-700"
+            }`}
+          >
+            {justAdded ? "✓ Ditambah" : "+ Keranjang"}
           </button>
         </div>
       </div>

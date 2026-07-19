@@ -6,6 +6,7 @@
 
 import { useEffect, useState } from "react";
 import { createClient, Order, OrderItem, Delivery, OrderStatus } from "@/lib/supabase";
+import { sendWhatsAppNotification, orderStatusUpdateMessage } from "@/lib/notify";
 
 const ORDER_STATUS_OPTIONS: OrderStatus[] = [
   "menunggu_konfirmasi",
@@ -76,6 +77,26 @@ export default function OrderDetailModal({
       .eq("id", order.id);
     setSaving(false);
     onUpdated();
+
+    // Kalau yang berubah itu status order, kabarin pelanggan lewat WhatsApp
+    if (field === "status" && order.customer_id) {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("full_name, phone")
+        .eq("id", order.customer_id)
+        .maybeSingle();
+
+      if (profile?.phone) {
+        sendWhatsAppNotification(
+          profile.phone,
+          orderStatusUpdateMessage({
+            customerName: profile.full_name ?? "Pelanggan",
+            orderCode: order.order_code,
+            status: value,
+          })
+        );
+      }
+    }
   }
 
   async function ensureDeliveryAndUpdate(status: string) {
